@@ -1,7 +1,13 @@
-
+/**
+ * Rocket Class
+ */
 class Rocket {
     
-     constructor (dna) {
+    /**
+     * Rocket Constructor
+     * @param {DNA} dna  optional DNA
+     */
+    constructor (dna) {
         this.pos = createVector(width/2, height-20);
         this.vel = p5.Vector.random2D();
         this.vel = createVector();
@@ -14,23 +20,28 @@ class Rocket {
         
     }
     
-    
+    /**
+     * force Vector to be applied to acceleration
+     * @param {p5.Vector} force 
+     */
     applyForce(force) {
-        
         this.acc.add(force);
     }
     
     
+    /**
+     * update this Rocket at each iteration
+     */
     update() {
         
+        // evaluate if we reached the target
         var d = dist(this.pos.x, this.pos.y, target.x, target.y);
-        
         if (d <= 15) {
             this.onTarget=true;
             this.counts = count;
         }
         
-        
+        // evaluate if we crashed into obstacle
         if (
             this.pos.x > obstacle.x &&
             this.pos.x < obstacle.x + obstacle.w &&
@@ -40,18 +51,21 @@ class Rocket {
             this.crashed = true;
         }
         
+        // evaluate if we crached into the side borders
         if (this.pos.x > width || this.pos.x < 0) {
             this.crashed = true;
         }
-        
+        // evaluate if we crashed into the top/bottom borders
         if (this.pos.y > height || this.pos.y < 0) {
             this.crashed = true;
         }
 
+        // apply the force for the current iterations Vector in dna.gene
         this.applyForce(this.dna.genes[count]);
 
+        // apply physics to rocket if we are still moving
         if (!this.onTarget && !this.crashed) {
-            this.vel.add(this.acc);
+            this.vel.add(this.acc);  
             this.pos.add(this.vel);
             this.acc.mult(0);
             
@@ -60,7 +74,9 @@ class Rocket {
         
     }
     
-    
+    /**
+     * calculate this Rockets fitness based on discance to target and crashed status
+     */
     calcFitness() {
         
         var d = dist(this.pos.x, this.pos.y, target.x, target.y);
@@ -76,7 +92,9 @@ class Rocket {
         
     }
     
-    
+    /**
+     * draw this rocket on the canvas 
+     */
     show() {
         push();
         translate(this.pos.x, this.pos.y);

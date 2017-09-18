@@ -1,5 +1,13 @@
+/*
+* class DNA
+* 
+*/
 class DNA {
-    
+  
+    /**
+     * DNA Constructor
+     * creates a new DNA object
+     */
     constructor() {
         this.genes = [];
         
@@ -9,7 +17,12 @@ class DNA {
         }
     }
     
-    
+    /**
+     * creates and returns a new DNA object with a fresh set of Genes
+     * mixed from this and partner.
+     * @param {DNA} partner   
+     * @returns {DNA}  
+     */
     crossover(partner) {
         var newdna = new DNA();
         var mid = floor(random(this.genes.length));
@@ -22,10 +35,12 @@ class DNA {
             }
         }
         
-        
         return newdna;
     }
     
+    /**
+     * randomly mutates the set of genes at a certain rate 
+     */
     mutation() {
         for(var i=0; i<this.genes.length; i++) {
             if (random(1) < 0.005) {
@@ -33,7 +48,6 @@ class DNA {
                 this.genes[i].setMag(MAXFORCE);
             }
         }
-        
     }
     
 }
