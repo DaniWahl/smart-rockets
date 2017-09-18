@@ -1,6 +1,12 @@
-
+/**
+ * class Population
+ */
 class Population {
     
+    /**
+     * Population Constructor
+     * create a new Populaton object
+     */
     constructor() {
         this.rockets = [];
         this.matingPool = [];
@@ -12,7 +18,12 @@ class Population {
         
     }
     
-    
+    /**
+     * evaluates the overall performance of this Rocket Population
+     * and generates a matingpool where each rocket is added multiple times based on 
+     * it's fitness. 
+     * Fitter Rockets get a higher chance of beeing selected for mating.
+     */
     evaluate() {
         
         
@@ -75,7 +86,10 @@ class Population {
             
     }
     
-    
+    /**
+     * selects two parent Rockets from the mating pool and
+     * creates a new child Rocket based on the parents cross-over genome product 
+     */
     selection() {
         var newRockets = [];
         
@@ -87,21 +101,17 @@ class Population {
             
             newRockets[i] = new Rocket(child);
         }
-        
        
         this.rockets = newRockets;
-        
     }
     
-    
+    /**
+     * updates and shows all Rockets in this Population
+     */
     run() {
-        
         for (var i=0; i<this.size; i++) {
             this.rockets[i].update();
             this.rockets[i].show();
-        }
-        
+        }   
     }
-    
-    
 }
