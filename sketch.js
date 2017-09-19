@@ -1,16 +1,28 @@
-const LIFESPAN = 700;
-const MAXFORCE = 0.3;
-const POPSIZE = 100;
+/**
+ * Smart Rockets sketch.
+ * Uses p5.js 
+ * Author: Daniel Wahl, 2017-09-19
+ */
+
+
+// global constants and variables
+const LIFESPAN = 700;   // number of steps for each rocket generation
+const POPSIZE = 100;    // number of rockets in each population
+const MAXFORCE = 0.3;   // force (magnitide) for Vectors
 
 var population;
-var count=0;
 var countP;
 var fitP;
 var target;
-var generation = 1;
 var oscacle = { } ;
+var generation = 1;   // counter of generations 
+var count = 0;        // counter of steps
 
 
+/**
+ * p5.js setup() function
+ * creates canvas, rocket population, target and obstacle objects
+ */
 function setup() {
     createCanvas(800, 600);
     population = new Population();
@@ -26,14 +38,20 @@ function setup() {
     };
 }
 
+
+/**
+ * p5.js draw() function
+ * iterates rockets and draws background & target/obstable objects
+ */
 function draw() {
     background(0);
-    population.run();
+    population.run();  // runs the whole population of rockets
     countP.html("Generation:" + generation );
     
     count++;
     if (count == LIFESPAN) {
         
+        // if run is over, evaluate current & create new population of rockets
         population.evaluate();
         population.selection();
         
@@ -42,6 +60,7 @@ function draw() {
     }
     
     
+    // draw target & obstacle
     fill(255,255,50);
     ellipse(target.x, target.y, 30, 30);
     
