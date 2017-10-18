@@ -26,13 +26,24 @@ class DNA {
     crossover(partner) {
         var newdna = new DNA();
         var mid = floor(random(this.genes.length));
+        var counter = 0;
+        var section = floor(random(this.genes.length) / 10);
+        var source = this;
         
         for(var i=0; i<this.genes.length; i++) {
-            if (i > mid) {
-                newdna.genes[i] = this.genes[i];
-            } else {
-                newdna.genes[i] = partner.genes[i];
-            }
+
+            if(counter == section) {
+                section = floor(random(this.genes.length) / 10);
+                counter = 0;
+                if(source === this) {
+                    source = partner;
+                } else {
+                    source = this;
+                }
+            } 
+
+            newdna.genes[i] = source.genes[i];
+            counter++;
         }
         
         return newdna;
@@ -43,7 +54,7 @@ class DNA {
      */
     mutation() {
         for(var i=0; i<this.genes.length; i++) {
-            if (random(1) < 0.005) {
+            if (random(1) < MUTATION_RATE) {
                 this.genes[i] = p5.Vector.random2D();
                 this.genes[i].setMag(MAXFORCE);
             }

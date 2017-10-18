@@ -63,7 +63,6 @@ class Population {
             "<br>  Crashed=" + crashed +
             "<br>  On Target=" + target
         );
-      //  console.log(maxfit, avgfit);
         
         // normalize fitness values to 0 to 1
         for (var i=0; i<this.size; i++) {
@@ -75,7 +74,7 @@ class Population {
         // Fitness. (fit rockets will be in matig pool more times)
         this.matingPool = [];
         for (var i=0; i<this.size; i++) {
-            var n = this.rockets[i].fitness * 100;
+            var n = this.rockets[i].fitness * 50;
             
             for(var j=0; j<n; j++) {
                 this.matingPool.push(this.rockets[i]);
@@ -109,9 +108,13 @@ class Population {
      * updates and shows all Rockets in this Population
      */
     run() {
+        var stopped = 0;
         for (var i=0; i<this.size; i++) {
-            this.rockets[i].update();
+            if(this.rockets[i].update()) {
+                stopped++;
+            }
             this.rockets[i].show();
         }   
+        return (stopped / this.size);
     }
 }

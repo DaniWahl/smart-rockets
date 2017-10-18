@@ -33,7 +33,9 @@ class Rocket {
      * update this Rocket at each iteration
      */
     update() {
-        
+
+
+
         // evaluate if we reached the target
         var d = dist(this.pos.x, this.pos.y, target.x, target.y);
         if (d <= 15) {
@@ -72,6 +74,7 @@ class Rocket {
             this.vel.limit(4);
         }
         
+        return (this.onTarget || this.crashed);
     }
     
     /**
@@ -87,7 +90,7 @@ class Rocket {
         }
         
         if (this.crashed) {
-            this.fitness /= 4;
+            this.fitness /= 2;
         }
         
     }
@@ -96,11 +99,19 @@ class Rocket {
      * draw this rocket on the canvas 
      */
     show() {
+        var opacity = 180;
         push();
         translate(this.pos.x, this.pos.y);
         rotate(this.vel.heading() +1.5707963267948966);
         
-        fill(255, 180);
+        if(this.crashed) {
+            opacity = 50;
+        }
+        if(this.onTarget) {
+            opacity = 255;
+        }
+ 
+        fill(255, opacity);
         triangle(0, 0,-5, 15 , 5, 15);
         
         pop();

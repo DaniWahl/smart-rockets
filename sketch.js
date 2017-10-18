@@ -6,9 +6,10 @@
 
 
 // global constants and variables
-const LIFESPAN = 700;   // number of steps for each rocket generation
+const LIFESPAN = 300;   // number of steps for each rocket generation
 const POPSIZE = 100;    // number of rockets in each population
-const MAXFORCE = 0.3;   // force (magnitide) for Vectors
+const MAXFORCE = 0.5;   // force (magnitide) for Vectors
+const MUTATION_RATE = 0.001;
 
 var population;
 var countP;
@@ -45,11 +46,11 @@ function setup() {
  */
 function draw() {
     background(0);
-    population.run();  // runs the whole population of rockets
+    var complete = population.run();  // runs the whole population of rockets
     countP.html("Generation:" + generation );
     
     count++;
-    if (count == LIFESPAN) {
+    if (count == LIFESPAN || complete === 1) {
         
         // if run is over, evaluate current & create new population of rockets
         population.evaluate();
